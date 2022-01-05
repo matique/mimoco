@@ -1,6 +1,5 @@
 require "test_helper"
 require "mimoco"
-#require "mimoco_controllers"
 
 class ControllersTest < ActionDispatch::IntegrationTest
   def test_some

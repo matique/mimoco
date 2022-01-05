@@ -4,7 +4,6 @@ require "mimoco"
 class ModelsTest < Minitest::Test
   def test_valid
     models = {Order => {valid: {name: "Name", qty: 123}}}
-#    models = {Order => {valid: {name: "Name", qty: :abc}}}
     check_models models
   end
 

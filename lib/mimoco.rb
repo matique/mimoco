@@ -85,8 +85,6 @@ module Minitest
         }
       end
 
-      private
-
       def self.one_valid(params)
         row, msg = create_model(params)
         @minitest.assert row.valid?, "#{msg} #{row.errors.full_messages}"
