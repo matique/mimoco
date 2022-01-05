@@ -13,13 +13,13 @@ module Minitest
     class ValidMissingError < StandardError; end
 
     class Base
-      attr_accessor :minitest, :model, :model_hash
+      attr_accessor :minitest, :klass, :klass_hash
 
       def self.run(data, minitest)
         @minitest = minitest
-        data.each do |model, hash|
-          @model = model
-          @model_hash = hash
+        data.each do |klass, hash|
+          @klass = klass
+          @klass_hash = hash
           hash.each do |key, value|
             send(key, value)
           end
@@ -45,14 +45,14 @@ module Minitest
       end
 
       def self.class_methods(methods)
-        cls = @model.methods(false).sort
+        cls = @klass.methods(false).sort
         cls.delete_if { |x| /^_/ =~ x }
         cls.delete_if { |x| /^(after|before|find_by)_/ =~ x }
         cls -= %i[column_headers attribute_type_decorations
           attributes_to_define_after_schema_loads
           default_scope_override defined_enums]
         names = "[#{methods.sort.join(" ")}]"
-        msg = "#{@model.name} must have class_methods #{names}"
+        msg = "#{@klass.name} must have class_methods #{names}"
         @minitest.assert_equal methods.sort.map(&:to_sym), cls, msg
       end
 
@@ -60,26 +60,26 @@ module Minitest
       def self.call_class_methods(methods)
         methods.each { |method|
           msg = "#{msg} #{method} should return no nil"
-          @minitest.refute_nil @model.send(method), msg
+          @minitest.refute_nil @klass.send(method), msg
         }
       end
 
       def self.public_methods(methods)
-        cls = @model.public_instance_methods(false).sort
+        cls = @klass.public_instance_methods(false).sort
         cls -= %i[autosave_associated_records_for_projects
           validate_associated_records_for_projects]
         names = "[#{methods.sort.join(" ")}]"
-        msg = "#{@model.name} must have public_methods #{names}"
+        msg = "#{@klass.name} must have public_methods #{names}"
         @minitest.assert_equal methods.sort.map(&:to_sym), cls, msg
       end
 
       # call_public_methods; don't check result
       def self.call_public_methods(methods)
-        model_params = @model_hash[:valid] || @model_hash[:valids]&.first
-        raise ValidMissingError unless model_params
+        klass_params = @klass_hash[:valid] || @klass_hash[:valids]&.first
+        raise ValidMissingError unless klass_params
 
         methods.each { |method|
-          row, msg = @model.create(model_params)
+          row, msg = @klass.create(klass_params)
           msg = "#{msg} #{method} should return no nil"
           @minitest.refute_nil row.send(method), msg
         }
@@ -96,24 +96,24 @@ module Minitest
       end
 
       def self.create_model(params)
-        row = @model.create(params)
-        [row, "#{@model}: #{params}"]
+        row = @klass.create(params)
+        [row, "#{@klass}: #{params}"]
       end
     end
 
     class Controllers < Base
       # check response
       def self.respond_to(methods)
-        instance = @model.new
+        instance = @klass.new
         methods.each { |method|
-          msg = "#{@model} should respond to #{method}"
+          msg = "#{@klass} should respond to #{method}"
           @minitest.assert instance.respond_to?(method), msg
         }
       end
 
       # controller should have some class methods
       def self.class_methods(expected)
-        class_methods = @model.methods(false).sort
+        class_methods = @klass.methods(false).sort
         class_methods -= %i[__callbacks helpers_path middleware_stack]
         @minitest.assert_equal expected, class_methods
       end
@@ -122,13 +122,13 @@ module Minitest
       def self.call_class_methods(methods)
         methods.each { |method|
           msg = "#{msg} #{method} should return no nil"
-          @minitest.refute_nil @model.send(method), msg
+          @minitest.refute_nil @klass.send(method), msg
         }
       end
 
       # controller should ONLY respond to public methods
       def self.public_methods(expected)
-        pub = @model.new.public_methods(false).sort
+        pub = @klass.new.public_methods(false).sort
         @minitest.assert_equal expected, pub
       end
     end

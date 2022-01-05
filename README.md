@@ -48,3 +48,24 @@ of hashes to create models to be checked.
 
 "call_public_methods" requires a "valid" item
 to instantiated a model used to applicate the methods.
+
+## Usage for Controllers
+
+~~~ ruby
+require "test_helper"
+require "mimoco"
+
+class ControllersTest < ActionDispatch::IntegrationTest
+  def test_some
+    controllers = {
+      OrdersController => {
+        respond_to: %i[create destroy edit index new show update],
+        class_methods: %i[class_method],
+        call_class_methods: %i[class_method],
+        public_methods: %i[create destroy edit index new show update]
+      }
+    }
+    check_controllers controllers
+  end
+end
+~~~
