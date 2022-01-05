@@ -104,10 +104,35 @@ module Minitest
     end
 
     class Controllers < Base
-def self.public_methods(params)
-p 777
-ic params
-end
+      # check response
+      def self.respond_to(methods)
+        instance = @model.new
+        methods.each { |method|
+          msg = "#{@model} should respond to #{method}"
+          @minitest.assert instance.respond_to?(method), msg
+        }
+      end
+
+      # controller should have some class methods
+      def self.class_methods(expected)
+        class_methods = @model.methods(false).sort
+        class_methods -= %i[__callbacks helpers_path middleware_stack]
+        @minitest.assert_equal expected, class_methods
+      end
+
+      # call class methods; result should be no nil
+      def self.call_class_methods(methods)
+        methods.each { |method|
+          msg = "#{msg} #{method} should return no nil"
+          @minitest.refute_nil @model.send(method), msg
+        }
+      end
+
+      # controller should ONLY respond to public methods
+      def self.public_methods(expected)
+        pub = @model.new.public_methods(false).sort
+        @minitest.assert_equal expected, pub
+      end
     end
   end
 
@@ -115,55 +140,3 @@ end
     include Checks
   end
 end
-
-
-=begin
-require "minitest"
-
-module Minitest
-
-...
-    def class_methods(model, methods, _model_params)
-      cls = model.methods(false).sort
-      cls.delete_if { |x| /^_/ =~ x }
-      cls.delete_if { |x| /^(after|before|find_by)_/ =~ x }
-      cls -= %i[column_headers attribute_type_decorations
-        attributes_to_define_after_schema_loads
-        default_scope_override defined_enums]
-      names = "[#{methods.sort.join(" ")}]"
-      msg = "#{model.name} must have class_methods #{names}"
-      assert_equal methods.sort.map(&:to_sym), cls, msg
-    end
-
-    # call class methods; don't check result
-    def call_class_methods(model, methods, _params)
-      methods.each { |method|
-        msg = "#{msg} #{method} should return no nil"
-        refute_nil model.send(method), msg
-      }
-    end
-
-    def public_methods(model, methods, _model_params)
-      cls = model.public_instance_methods(false).sort
-      cls -= %i[autosave_associated_records_for_projects
-        validate_associated_records_for_projects]
-      names = "[#{methods.sort.join(" ")}]"
-      msg = "#{model.name} must have public_methods #{names}"
-      assert_equal methods.sort.map(&:to_sym), cls, msg
-    end
-
-    # call_public_methods; don't check result
-    def call_public_methods(model, methods, model_params)
-      methods.each { |method|
-        row, msg = model.create(model_params)
-        msg = "#{msg} #{method} should return no nil"
-        refute_nil row.send(method), msg
-      }
-    end
-
-...
-  end
-
-...
-end
-=end

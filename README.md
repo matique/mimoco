@@ -2,11 +2,11 @@
 
 [model_params[Gem Version](https://badge.fury.io/rb/miau.png)](http://badge.fury.io/rb/mimoco)
 
-Mimoco (MInitest MOdels COntrollers) (no COntrollers yet) DRY
-your tests by specifying some (trivial) of them in a table.
+Mimoco (MInitest MOdels COntrollers) DRY
+your tests by specifying some (trivial) of them via table.
 
 Mimoco doesn't replace the "assert"s of MiniTest.
-It is more a kind of quick and dirty check.
+It is more a kind of a quick and dirty check.
 Still, it has demonstrated to be useful, in particular,
 to detect code changes which often went unseen.
 
@@ -45,3 +45,6 @@ end
 
 Furthermore, "valids" and "invalids" accepts an array
 of hashes to create models to be checked.
+
+"call_public_methods" requires a "valid" item
+to instantiated a model used to applicate the methods.
