@@ -1,0 +1,25 @@
+lib = File.expand_path("../lib", __FILE__)
+$LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
+require "mimoco/version"
+
+Gem::Specification.new do |s|
+  s.name = "mimoco"
+  s.version = Mimoco::VERSION
+  s.platform = Gem::Platform::RUBY
+  s.summary = "Mimoco: some minitests for models and controllers"
+  s.description = "Some testing for models and controllers"
+  s.authors = ["Dittmar Krall"]
+  s.email = ["dittmar.krall@matique.com"]
+  s.homepage = "http://matique.com"
+  s.license = "MIT"
+
+  # s.metadata["source_code_uri"] = "https://github.com/matique/stones2"
+
+  s.files = `git ls-files`.split("\n")
+  s.require_paths = ["lib"]
+
+  s.add_development_dependency "combustion"
+
+  s.add_development_dependency "minitest"
+  s.add_development_dependency "sqlite3"
+end
