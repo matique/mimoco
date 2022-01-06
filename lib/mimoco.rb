@@ -13,17 +13,25 @@ module Minitest
     class ValidMissingError < StandardError; end
 
     class Base
-      attr_accessor :minitest, :klass, :klass_hash
+      attr_accessor :minitest, :klass, :klass_hash, :where
 
       def self.run(data, minitest)
         @minitest = minitest
         data.each do |klass, hash|
           @klass = klass
           @klass_hash = hash
-          hash.each do |key, value|
-            send(key, value)
+          hash.each do |function, value|
+            @where = "#{klass}##{function}"
+            send(function, value)
           end
         end
+      end
+
+      def self.check_equal(expected, actual, msg = nil)
+        expected = expected.sort.map(&:to_sym)
+        actual = actual.sort.map(&:to_sym)
+        msg = msg ? "#{@where}: #{msg}" : @where
+        @minitest.assert_equal expected, actual, msg
       end
     end
 
@@ -44,16 +52,14 @@ module Minitest
         arr.each { |params| one_invalid(params) }
       end
 
-      def self.class_methods(methods)
+      def self.class_methods(expected)
         cls = @klass.methods(false).sort
         cls.delete_if { |x| /^_/ =~ x }
         cls.delete_if { |x| /^(after|before|find_by)_/ =~ x }
         cls -= %i[column_headers attribute_type_decorations
           attributes_to_define_after_schema_loads
           default_scope_override defined_enums]
-        names = "[#{methods.sort.join(" ")}]"
-        msg = "#{@klass.name} must have class_methods #{names}"
-        @minitest.assert_equal methods.sort.map(&:to_sym), cls, msg
+        check_equal expected, cls
       end
 
       # call class methods; don't check result
@@ -64,13 +70,11 @@ module Minitest
         }
       end
 
-      def self.public_methods(methods)
+      def self.public_methods(expected)
         cls = @klass.public_instance_methods(false).sort
         cls -= %i[autosave_associated_records_for_projects
           validate_associated_records_for_projects]
-        names = "[#{methods.sort.join(" ")}]"
-        msg = "#{@klass.name} must have public_methods #{names}"
-        @minitest.assert_equal methods.sort.map(&:to_sym), cls, msg
+        check_equal expected, cls
       end
 
       # call_public_methods; don't check result
@@ -113,9 +117,9 @@ module Minitest
 
       # controller should have some class methods
       def self.class_methods(expected)
-        class_methods = @klass.methods(false).sort
-        class_methods -= %i[__callbacks helpers_path middleware_stack]
-        @minitest.assert_equal expected, class_methods
+        cls = @klass.methods(false).sort
+        cls -= %i[__callbacks helpers_path middleware_stack]
+        check_equal expected, cls
       end
 
       # call class methods; result should be no nil
@@ -128,8 +132,8 @@ module Minitest
 
       # controller should ONLY respond to public methods
       def self.public_methods(expected)
-        pub = @klass.new.public_methods(false).sort
-        @minitest.assert_equal expected, pub
+        cls = @klass.new.public_methods(false).sort
+        check_equal expected, cls
       end
     end
   end
