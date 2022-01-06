@@ -125,8 +125,6 @@ module Minitest
 
       def self.call_class_methods(methods)
         methods.each { |meth|
-#          msg = "#{msg} #{method} should return no nil"
-#          @minitest.refute_nil @klass.send(method), msg
           check_no_nil @klass.send(meth), "<#{meth}> should return no nil"
         }
       end
