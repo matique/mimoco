@@ -33,6 +33,11 @@ module Minitest
         msg = msg ? "#{@where}: #{msg}" : @where
         @minitest.assert_equal expected, actual, msg
       end
+
+      def self.check_no_nil(actual, msg = nil)
+        msg = msg ? "#{@where}: #{msg}" : @where
+        @minitest.refute_nil actual, msg
+      end
     end
 
     class Models < Base
@@ -64,9 +69,8 @@ module Minitest
 
       # call class methods; don't check result
       def self.call_class_methods(methods)
-        methods.each { |method|
-          msg = "#{msg} #{method} should return no nil"
-          @minitest.refute_nil @klass.send(method), msg
+        methods.each { |meth|
+          check_no_nil @klass.send(meth), "<#{meth}> should return no nil"
         }
       end
 
@@ -82,10 +86,9 @@ module Minitest
         klass_params = @klass_hash[:valid] || @klass_hash[:valids]&.first
         raise ValidMissingError unless klass_params
 
-        methods.each { |method|
+        methods.each { |meth|
           row, msg = @klass.create(klass_params)
-          msg = "#{msg} #{method} should return no nil"
-          @minitest.refute_nil row.send(method), msg
+          check_no_nil row.send(meth), "<#{meth}> should return no nil"
         }
       end
 
@@ -106,7 +109,6 @@ module Minitest
     end
 
     class Controllers < Base
-      # check response
       def self.respond_to(methods)
         instance = @klass.new
         methods.each { |method|
@@ -115,22 +117,20 @@ module Minitest
         }
       end
 
-      # controller should have some class methods
       def self.class_methods(expected)
         cls = @klass.methods(false).sort
         cls -= %i[__callbacks helpers_path middleware_stack]
         check_equal expected, cls
       end
 
-      # call class methods; result should be no nil
       def self.call_class_methods(methods)
-        methods.each { |method|
-          msg = "#{msg} #{method} should return no nil"
-          @minitest.refute_nil @klass.send(method), msg
+        methods.each { |meth|
+#          msg = "#{msg} #{method} should return no nil"
+#          @minitest.refute_nil @klass.send(method), msg
+          check_no_nil @klass.send(meth), "<#{meth}> should return no nil"
         }
       end
 
-      # controller should ONLY respond to public methods
       def self.public_methods(expected)
         cls = @klass.new.public_methods(false).sort
         check_equal expected, cls
