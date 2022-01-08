@@ -13,7 +13,7 @@ Gem::Specification.new do |s|
   s.homepage = "http://matique.com"
   s.license = "MIT"
 
-  # s.metadata["source_code_uri"] = "https://github.com/matique/stones2"
+  s.metadata["source_code_uri"] = "https://github.com/matique/mimoco"
 
   s.files = `git ls-files`.split("\n")
   s.require_paths = ["lib"]
