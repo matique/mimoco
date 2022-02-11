@@ -1,6 +1,6 @@
 # MiMoCo
 
-[![Gem Version](https://badge.fury.io/rb/miau.png)](http://badge.fury.io/rb/mimoco)
+[![Gem Version](https://badge.fury.io/rb/mimoco.png)](http://badge.fury.io/rb/mimoco)
 
 Mimoco (MInitest MOdels COntrollers) DRY
 your tests by specifying some (trivial) of them via a table.
