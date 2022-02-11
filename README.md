@@ -3,7 +3,7 @@
 [![Gem Version](https://badge.fury.io/rb/miau.png)](http://badge.fury.io/rb/mimoco)
 
 Mimoco (MInitest MOdels COntrollers) DRY
-your tests by specifying some (trivial) of them via table.
+your tests by specifying some (trivial) of them via a table.
 
 Mimoco doesn't replace the "assert"s of MiniTest.
 It is more a kind of a quick and dirty check.

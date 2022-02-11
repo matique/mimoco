@@ -76,10 +76,6 @@ module Minitest
 
       def self.public_methods(expected)
         cls = @klass.public_instance_methods(false).sort
-# ic cls
-# to_s important
-#        cls.delete_if { |x| /.*\_associated\_records\_for\_.*/ =~ x.to_s }
-#ic 22, cls
         cls -= %i[autosave_associated_records_for_projects
           validate_associated_records_for_projects]
         check_equal expected, cls
@@ -91,7 +87,7 @@ module Minitest
         raise ValidMissingError unless klass_params
 
         methods.each { |meth|
-          row, msg = @klass.create(klass_params)
+          row, _msg = @klass.create(klass_params)
           check_no_nil row.send(meth), "<#{meth}> should return no nil"
         }
       end
@@ -123,6 +119,7 @@ module Minitest
 
       def self.class_methods(expected)
         cls = @klass.methods(false).sort
+        cls.delete_if { |x| /^_/ =~ x }
         cls -= %i[__callbacks helpers_path middleware_stack]
         check_equal expected, cls
       end
