@@ -76,8 +76,8 @@ module Minitest
 
       def self.public_methods(expected)
         cls = @klass.public_instance_methods(false).sort
-        cls -= %i[autosave_associated_records_for_projects
-          validate_associated_records_for_projects]
+        cls.delete_if { |x| /.*_associated_records_.*/ =~ x }
+        #  validate_associated_records_for_projects]
         check_equal expected, cls
       end
 

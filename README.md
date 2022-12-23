@@ -12,15 +12,16 @@ to detect code changes which often went unseen.
 
 ## Installation
 
-~~~ ruby
+As usual:
+```ruby
 # Gemfile
 gem "mimoco"
-~~~
+```
 and run "bundle install".
 
 ## Usage for Models
 
-~~~ ruby
+```ruby
 require "test_helper"
 require "mimoco"
 
@@ -41,7 +42,7 @@ class ModelsTest < Minitest::Test
     check_models models
   end
 end
-~~~
+```
 
 Furthermore, "valids" and "invalids" accepts an array
 of hashes to create models to be checked.
@@ -51,7 +52,7 @@ to instantiated a model used to applicate the methods.
 
 ## Usage for Controllers
 
-~~~ ruby
+```ruby
 require "test_helper"
 require "mimoco"
 
@@ -68,4 +69,11 @@ class ControllersTest < ActionDispatch::IntegrationTest
     check_controllers controllers
   end
 end
-~~~
+```
+
+## Miscellaneous
+
+Copyright (c) 2022 Dittmar Krall (www.matiq.com),
+released under the MIT license:
+
+* https://opensource.org/licenses/MIT
