@@ -11,6 +11,7 @@ class ControllersTest < ActionDispatch::IntegrationTest
         public_methods: %i[create destroy edit index new show update]
       }
     }
+
     check_controllers controllers
   end
 end

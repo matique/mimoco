@@ -9,8 +9,8 @@ Gem::Specification.new do |s|
   s.summary = "Mimoco: some minitests for models and controllers"
   s.description = "Some testing for models and controllers"
   s.authors = ["Dittmar Krall"]
-  s.email = ["dittmar.krall@matique.com"]
-  s.homepage = "http://matique.com"
+  s.email = ["dittmar.krall@matiq.com"]
+  s.homepage = "http://matiq.com"
   s.license = "MIT"
 
   s.metadata["source_code_uri"] = "https://github.com/matique/mimoco"
@@ -19,7 +19,6 @@ Gem::Specification.new do |s|
   s.require_paths = ["lib"]
 
   s.add_development_dependency "combustion"
-
   s.add_development_dependency "minitest"
   s.add_development_dependency "sqlite3"
 end
