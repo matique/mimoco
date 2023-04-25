@@ -75,7 +75,7 @@ end
 
 ## Miscellaneous
 
-Copyright (c) 2022 Dittmar Krall (www.matiq.com),
+Copyright (c) 2022-2023 Dittmar Krall (www.matiq.com),
 released under the MIT license:
 
 * https://opensource.org/licenses/MIT
