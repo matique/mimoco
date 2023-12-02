@@ -2,22 +2,11 @@ require "test_helper"
 require "mimoco"
 
 class ModelsTest < Minitest::Test
-  def test_class_methods
-    models = {Order => {class_methods: %i[class_method]}}
-p 222
-    check_models models
+  def test_public_methods
+    models = {Order => {public_methods: %i[public_method]}}
+    check_models models, exclude_public_methods: %i[public_method]
   end
 
-#  def test_call_class_methods
-#    models = {Order => {call_class_methods: %i[class_method]}}
-#    check_models models
-#  end
-#
-#  def test_public_methods
-#    models = {Order => {public_methods: %i[public_method]}}
-#    check_models models
-#  end
-#
 #  def test_call_public_methods
 #    models = {
 #      Order => {

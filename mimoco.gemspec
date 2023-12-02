@@ -10,7 +10,7 @@ Gem::Specification.new do |s|
   s.description = "Some testing for models and controllers"
   s.authors = ["Dittmar Krall"]
   s.email = ["dittmar.krall@matiq.com"]
-  s.homepage = "http://matiq.com"
+  s.homepage = "https://github.com/matique/mimoco"
   s.license = "MIT"
 
   s.metadata["source_code_uri"] = "https://github.com/matique/mimoco"

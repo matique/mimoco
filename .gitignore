@@ -6,4 +6,4 @@ coverage/
 *.log
 *.lock
 
-**/db/*.sqlite3
+**/db/test.sqlite3*
