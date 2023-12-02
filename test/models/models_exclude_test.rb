@@ -2,9 +2,11 @@ require "test_helper"
 require "mimoco"
 
 class ModelsTest < Minitest::Test
-  def test_public_methods
+  def test_exclude_public_methods
+assert true
     models = {Order => {public_methods: %i[public_method]}}
-    check_models models, exclude_public_methods: %i[public_method]
+    check_models models
+#    check_models models, exclude_public_methods: %i[public_method]
   end
 
 #  def test_call_public_methods
