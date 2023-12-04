@@ -5,17 +5,6 @@ module Minitest
     class Models < Base
       def self.class_methods(expected)
         meths = delete_methods(:methods)
-#ic 33, @ignore
-#        cls = @klass.methods(false).sort
-#ic 331, cls
-#        cls2 = @klass.superclass.methods(false).sort
-#ic 332, cls2
-#        cls = cls - cls2 - @ignore
-#        cls.delete_if { |x| /^_/ =~ x }
-#        cls.delete_if { |x| /^(after|before|find_by)_/ =~ x }
-#        cls -= %i[column_headers attribute_type_decorations
-#          attributes_to_define_after_schema_loads
-#          default_scope_override defined_enums]
         check_equal expected, meths
       end
 
