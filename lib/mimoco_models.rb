@@ -4,13 +4,19 @@ module Minitest
   module Checks
     class Models < Base
       def self.class_methods(expected)
-        cls = @klass.methods(false).sort
-        cls.delete_if { |x| /^_/ =~ x }
-        cls.delete_if { |x| /^(after|before|find_by)_/ =~ x }
-        cls -= %i[column_headers attribute_type_decorations
-          attributes_to_define_after_schema_loads
-          default_scope_override defined_enums]
-        check_equal expected, cls
+        meths = delete_methods(:methods)
+#ic 33, @ignore
+#        cls = @klass.methods(false).sort
+#ic 331, cls
+#        cls2 = @klass.superclass.methods(false).sort
+#ic 332, cls2
+#        cls = cls - cls2 - @ignore
+#        cls.delete_if { |x| /^_/ =~ x }
+#        cls.delete_if { |x| /^(after|before|find_by)_/ =~ x }
+#        cls -= %i[column_headers attribute_type_decorations
+#          attributes_to_define_after_schema_loads
+#          default_scope_override defined_enums]
+        check_equal expected, meths
       end
 
       # call class methods; don't check result
@@ -21,10 +27,8 @@ module Minitest
       end
 
       def self.public_methods(expected)
-        cls = @klass.public_instance_methods(false).sort
-        cls.delete_if { |x| /.*_associated_records_.*/ =~ x }
-        #  validate_associated_records_for_projects]
-        check_equal expected, cls
+        meths = delete_methods(:methods)
+        check_equal expected, meths
       end
 
       # call_public_methods; don't check result

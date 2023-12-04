@@ -6,19 +6,14 @@ require "mimoco_controllers"
 
 module Minitest
   module Checks
-# def t(*args, **kwargs)
-#   proc { I18n.t(*args, **kwargs) }
-# end
-#    def check_models(data)
 #    def check_models(data, *args, **kwargs)
-    def check_models(data, **kwargs)
-#ic args
-ic kwargs
-      Models.run data, self
+    def check_models(data, ignore_methods: nil)
+      Models.run data, self, ignore_methods
     end
 
-    def check_controllers(data)
-      Controllers.run data, self
+#    def check_controllers(data)
+    def check_controllers(data, ignore_methods: nil)
+      Controllers.run data, self, ignore_methods
     end
 
     class ValidMissingError < StandardError; end

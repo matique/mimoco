@@ -5,8 +5,9 @@ module Minitest
     class Base
       attr_accessor :minitest, :klass, :klass_hash, :where
 
-      def self.run(data, minitest)
+      def self.run(data, minitest, ignore_methods)
         @minitest = minitest
+        @ignore = [ignore_methods].flatten
         data.each do |klass, hash|
           @klass = klass
           @klass_hash = hash
@@ -27,6 +28,18 @@ module Minitest
       def self.check_no_nil(actual, msg = nil)
         msg = msg ? "#{@where}: #{msg}" : @where
         @minitest.refute_nil actual, msg
+      end
+
+      def self.delete_methods(which)
+ic which
+        # cls -= %i[__callbacks helpers_path middleware_stack]
+        methods = @klass.send(which, false).sort
+ic methods
+        methods.delete_if { |x| /^_/ =~ x }
+ic methods
+        methods2 = @klass.superclass.send(which, false).sort
+ic methods2
+        methods - methods2 - @ignore
       end
     end
   end

@@ -12,10 +12,8 @@ module Minitest
       end
 
       def self.class_methods(expected)
-        cls = @klass.methods(false).sort
-        cls.delete_if { |x| /^_/ =~ x }
-        cls -= %i[__callbacks helpers_path middleware_stack]
-        check_equal expected, cls
+        meths = delete_methods(:methods)
+        check_equal expected, meths
       end
 
       def self.call_class_methods(methods)
