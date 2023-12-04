@@ -31,15 +31,12 @@ module Minitest
       end
 
       def self.delete_methods(which)
-ic which
+        ignore2 = %i[attribute_aliases default_scope_override]
         # cls -= %i[__callbacks helpers_path middleware_stack]
         methods = @klass.send(which, false).sort
-ic methods
         methods.delete_if { |x| /^_/ =~ x }
-ic methods
         methods2 = @klass.superclass.send(which, false).sort
-ic methods2
-        methods - methods2 - @ignore
+        methods - methods2 - @ignore - ignore2
       end
     end
   end

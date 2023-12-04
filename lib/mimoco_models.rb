@@ -27,7 +27,7 @@ module Minitest
       end
 
       def self.public_methods(expected)
-        meths = delete_methods(:methods)
+        meths = delete_methods(:public_instance_methods)
         check_equal expected, meths
       end
 
