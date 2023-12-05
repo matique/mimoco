@@ -33,6 +33,11 @@ module Minitest
       def self.delete_methods(which)
         ignore2 = %i[attribute_aliases default_scope_override]
         # cls -= %i[__callbacks helpers_path middleware_stack]
+        # cls.delete_if { |x| /^(after|before|find_by)_/ =~ x }
+        # cls.delete_if { |x| /.*_associated_records_.*/ =~ x }
+        # cls -= %i[column_headers attribute_type_decorations
+        #   attributes_to_define_after_schema_loads
+        #   default_scope_override defined_enums]
         methods = @klass.send(which, false).sort
         methods.delete_if { |x| /^_/ =~ x }
         methods2 = @klass.superclass.send(which, false).sort
