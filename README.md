@@ -73,6 +73,20 @@ class ControllersTest < ActionDispatch::IntegrationTest
 end
 ```
 
+## Parameter
+
+Rails magic adds a few additional methods to a model or a controller
+(e.g. #column_headers).
+
+MiMoCo ignores them, but future versions of Rails may add more.
+They can be ignored by:
+
+```ruby
+check_models models, ignore_methods: magic_method
+...
+check_controllers controllers, ignore_methods: %i[magic2 magic3]
+```
+
 ## Miscellaneous
 
 Copyright (c) 2022-2023 Dittmar Krall (www.matiq.com),

@@ -35,9 +35,7 @@ module Minitest
           attributes_to_define_after_schema_loads column_headers
           default_scope_override]
         # cls -= %i[__callbacks helpers_path middleware_stack]
-        # cls.delete_if { |x| /.*_associated_records_.*/ =~ x }
-        # cls -= %i[attribute_type_decorations
-        #   default_scope_override defined_enums]
+        # cls -= %i[attribute_type_decorations defined_enums]
         methods = @klass.send(which, false).sort
         methods.delete_if { |x| /^_/ =~ x }
         methods.delete_if { |x| /^(after|before|find_by)_/ =~ x }
