@@ -30,7 +30,8 @@ module Minitest
       end
 
       def self.create_model(params)
-        row = @klass.create(params)
+        # row = @klass.create(params)
+        row = @klass.new(params)
         [row, "#{@klass}: #{params}"]
       end
     end

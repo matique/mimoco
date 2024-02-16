@@ -1,9 +1,10 @@
 .bundle/
 coverage/
-.watchr
 
 *.gem
 *.log
 *.lock
 
 **/db/test.sqlite3*
+/test/internal/storage/
+/test/internal/tmp/

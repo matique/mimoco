@@ -26,7 +26,8 @@ module Minitest
         raise ValidMissingError unless klass_params
 
         methods.each { |meth|
-          row, _msg = @klass.create(klass_params)
+          # row, _msg = @klass.create(klass_params)
+          row = @klass.new(klass_params)
           check_no_nil row.send(meth), "<#{meth}> should return no nil"
         }
       end
