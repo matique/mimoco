@@ -40,6 +40,7 @@ module Minitest
         methods.delete_if { |x| /^_/ =~ x }
         methods.delete_if { |x| /^(after|before|find_by)_/ =~ x }
         methods.delete_if { |x| /.*_associated_records_.*/ =~ x }
+        methods.delete_if { |x| /.*_association_names/ =~ x }
         methods2 = @klass.superclass.send(which, false).sort
         methods - methods2 - @ignore - ignore2
       end
