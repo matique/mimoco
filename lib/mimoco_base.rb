@@ -31,9 +31,9 @@ module Minitest
       end
 
       def self.delete_methods(which)
-        ignore2 = %i[attribute_aliases
+        ignore2 = %i[attribute_aliases attribute_aliases=
           attributes_to_define_after_schema_loads column_headers
-          default_scope_override]
+          default_scope_override default_scope_override=]
         # cls -= %i[__callbacks helpers_path middleware_stack]
         # cls -= %i[attribute_type_decorations defined_enums]
         methods = @klass.send(which, false).sort

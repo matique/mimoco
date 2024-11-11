@@ -1,6 +1,10 @@
 # MiMoCo
 
-[![Gem Version](https://badge.fury.io/rb/mimoco.png)](http://badge.fury.io/rb/mimoco)
+[![Gem Version](https://badge.fury.io/rb/mimoco.svg)](http://badge.fury.io/rb/mimoco)
+[![GEM Downloads](https://img.shields.io/gem/dt/mimoco?color=168AFE&logo=ruby&logoColor=FE1616)](https://rubygems.org/gems/mimoco)
+[![rake](https://github.com/matique/mimoco/actions/workflows/rake.yml/badge.svg)](https://github.com/matique/mimoco/actions/workflows/rake.yml)
+[![Ruby Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://github.com/standardrb/standard)
+[![MIT License](https://img.shields.io/badge/license-MIT-blue.svg)](http://choosealicense.com/licenses/mit/)
 
 Mimoco (MInitest MOdels COntrollers) DRY
 your tests by specifying some (trivial) of them via a table.
