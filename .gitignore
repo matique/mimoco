@@ -1,10 +1,10 @@
-.bundle/
-coverage/
+# ~/.gitignore included
+
 .watchr
 
-*.gem
-*.log
-*.lock
+**/*.gem
+**/*.log
+**/*.lock
 
 **/db/test.sqlite3*
 /test/internal/storage/
