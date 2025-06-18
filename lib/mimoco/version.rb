@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 
 module Mimoco
-  VERSION = "1.0.3" # 2024-11-11
+  VERSION = "1.0.4" # 2025-06-18
+  # VERSION = "1.0.3" # 2024-11-11
   # VERSION = "1.0.2" # 2024-08-22
   # VERSION = "1.0.1" # 2024-02-16
   # VERSION = "1.0.0" # 2023-12-06

@@ -93,5 +93,5 @@ check_controllers controllers, ignore_methods: %i[magic2 magic3]
 
 ## Miscellaneous
 
-Copyright (c) 2022-2024 Dittmar Krall (www.matiq.com),
+Copyright (c) 2022-2025 Dittmar Krall (www.matiq.com),
 released under the [MIT license](https://opensource.org/licenses/MIT).
