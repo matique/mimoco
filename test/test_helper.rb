@@ -6,7 +6,7 @@ if ENV["COVERAGE"]
 end
 
 require "combustion"
-Combustion.path = "test/dummy"
+Combustion.path = "test/internal"
 Combustion.initialize! :active_record
 
 require "rails/test_help"
