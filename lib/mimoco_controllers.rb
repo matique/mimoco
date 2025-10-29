@@ -24,6 +24,7 @@ module Minitest
 
       def self.public_methods(expected)
         cls = @klass.new.public_methods(false).sort
+        cls.delete_if { |x| /^_/ =~ x }
         check_equal expected, cls
       end
     end
